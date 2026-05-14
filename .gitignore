@@ -1,0 +1,7 @@
+.shuttle.env/
+win/.shuttle.env/
+linux/.shuttle.env/
+shuttle_tool/win/.shuttle.env/
+shuttle_tool/linux/.shuttle.env/
+__pycache__/
+*.py[cod]
