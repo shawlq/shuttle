@@ -7,8 +7,8 @@ import sys
 import threading
 from pathlib import Path
 
-# 支持「在仓库根执行 python shuttle_tool/win/app.py」时能找到 shuttle_tool 包
-_REPO_ROOT = Path(__file__).resolve().parents[2]
+# 支持「在仓库根执行 python win/app.py」时能找到 common / linux 等包
+_REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(_REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(_REPO_ROOT))
 
@@ -16,8 +16,8 @@ import tkinter as tk
 import tkinter.font as tkfont
 from tkinter import messagebox, scrolledtext
 
-from shuttle_tool.common.git_client import GitShuttle, GitShuttleError
-from shuttle_tool.common.shuttle_env import ShuttleEnvError, save_env_dir, try_apply_env_dir, win_env_dir
+from common.git_client import GitShuttle, GitShuttleError
+from common.shuttle_env import ShuttleEnvError, save_env_dir, try_apply_env_dir, win_env_dir
 
 _GEOM_FILE = "window_geometry.txt"
 
@@ -41,7 +41,7 @@ def _save_window_geometry(env_dir: Path, root: tk.Tk) -> None:
             return
         env_dir.mkdir(parents=True, exist_ok=True)
         (env_dir / _GEOM_FILE).write_text(
-            "# shuttle_tool 主窗口 geometry（勿提交到 Git）\n" + geom + "\n",
+            "# shuttle 主窗口 geometry（勿提交到 Git）\n" + geom + "\n",
             encoding="utf-8",
         )
     except OSError:
@@ -140,7 +140,7 @@ def _show_first_run_config(env_dir: Path) -> bool:
             save_env_dir(
                 env_dir,
                 data,
-                header="# shuttle_tool Windows 本地配置 — 勿提交到 Git 仓库",
+                header="# shuttle Windows 本地配置 — 勿提交到 Git 仓库",
             )
             try_apply_env_dir(env_dir)
         except ShuttleEnvError as e:
@@ -160,7 +160,7 @@ def _show_first_run_config(env_dir: Path) -> bool:
         save_env_dir(
             env_dir,
             data,
-            header="# shuttle_tool Windows 本地配置 — 勿提交到 Git 仓库",
+            header="# shuttle Windows 本地配置 — 勿提交到 Git 仓库",
         )
         ok_flag = True
         root.destroy()
@@ -205,7 +205,7 @@ def main() -> None:
         return
 
     root = tk.Tk()
-    root.title("Git 文本穿梭 (shuttle_tool)")
+    root.title("Git 文本穿梭 (shuttle)")
     _apply_smaller_fonts(root)
     saved = _load_saved_geometry(env_dir)
     root.geometry(saved if saved else "720x520")

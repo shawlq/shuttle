@@ -19,7 +19,7 @@ class GitShuttleError(RuntimeError):
 class GitShuttle:
     """在已 clone 的仓库中读写约定载荷文件并 pull/commit/push。"""
 
-    DEFAULT_PAYLOAD_REL = "shuttle_tool/shuttle_payload.txt"
+    DEFAULT_PAYLOAD_REL = "shuttle/shuttle_payload.txt"
 
     def __init__(
         self,

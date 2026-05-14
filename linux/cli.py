@@ -6,13 +6,13 @@ import argparse
 import sys
 from pathlib import Path
 
-# 支持「python shuttle_tool/linux/cli.py」在未设置 PYTHONPATH 时从仓库根运行
-_REPO_ROOT = Path(__file__).resolve().parents[2]
+# 支持「python linux/cli.py」在未设置 PYTHONPATH 时从仓库根运行
+_REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(_REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(_REPO_ROOT))
 
-from shuttle_tool.common.git_client import GitShuttle, GitShuttleError
-from shuttle_tool.common.shuttle_env import ShuttleEnvError, linux_env_dir, try_apply_env_dir
+from common.git_client import GitShuttle, GitShuttleError
+from common.shuttle_env import ShuttleEnvError, linux_env_dir, try_apply_env_dir
 
 
 def _read_send_body(args: argparse.Namespace) -> str:
@@ -28,8 +28,8 @@ def main() -> int:
     except ShuttleEnvError as e:
         print(str(e), file=sys.stderr)
         print(
-            "提示: 请检查 shuttle_tool/linux/.shuttle.env/config 中的 SHUTTLE_REPO_URL，"
-            "或重新运行 shuttle_tool/linux/install.sh。",
+            "提示: 请检查 linux/.shuttle.env/config 中的 SHUTTLE_REPO_URL，"
+            "或重新运行 linux/install.sh。",
             file=sys.stderr,
         )
         return 1
@@ -54,8 +54,8 @@ def main() -> int:
     except GitShuttleError as e:
         print(str(e), file=sys.stderr)
         print(
-            "提示: 可编辑 shuttle_tool/linux/.shuttle.env/config，"
-            "或运行 shuttle_tool/linux/install.sh，或在 shell 中 export SHUTTLE_REPO_ROOT=...",
+            "提示: 可编辑 linux/.shuttle.env/config，"
+            "或运行 linux/install.sh，或在 shell 中 export SHUTTLE_REPO_ROOT=...",
             file=sys.stderr,
         )
         return 1

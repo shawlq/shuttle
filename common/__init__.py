@@ -1,5 +1,5 @@
-from shuttle_tool.common.git_client import GitShuttle, GitShuttleError
-from shuttle_tool.common.shuttle_env import (
+from .git_client import GitShuttle, GitShuttleError
+from .shuttle_env import (
     ShuttleEnvError,
     clone_target,
     ensure_repo_cloned,

@@ -21,11 +21,11 @@
 
 ## 本地目录 `.shuttle.env`（勿提交）
 
-- **Windows**：首次运行 [`shuttle/win/app.py`](shuttle/win/app.py) 时填写 **远程 HTTP(S) 地址**（及可选克隆分支等）；工具将仓库克隆到 **`shuttle/win/.shuttle.env/repo`**，并把配置写入同目录下的 `config`。
-- **Linux（install.sh）**：安装脚本同样只询问 **HTTP/HTTPS 远程地址**（不要填本地路径），将仓库克隆到 **`…/shuttle/linux/.shuttle.env/repo`**（在 `PREFIX/lib/shuttle/...` 下），并写入 `linux/.shuttle.env/config`。已安装的 `shuttle` 命令会 `source` 该配置文件。
-- **从源码运行 CLI**：若未在 shell 中 `export SHUTTLE_REPO_ROOT`，会读取源码树下的 `shuttle/linux/.shuttle.env/config`；若其中含 `SHUTTLE_REPO_URL` 而本地尚无 `repo/`，会自动克隆。
+- **Windows**：首次运行 [`win/app.py`](win/app.py) 时填写 **远程 HTTP(S) 地址**（及可选克隆分支等）；工具将仓库克隆到 **`win/.shuttle.env/repo`**，并把配置写入同目录下的 `config`。
+- **Linux（install.sh）**：安装脚本同样只询问 **HTTP/HTTPS 远程地址**（不要填本地路径），将仓库克隆到 **`…/lib/shuttle/linux/.shuttle.env/repo`**（位于安装前缀 `PREFIX` 下），并写入 `linux/.shuttle.env/config`。已安装的 `shuttle` 命令会 `source` 该配置文件。
+- **从源码运行 CLI**：若未在 shell 中 `export SHUTTLE_REPO_ROOT`，会读取源码树下的 `linux/.shuttle.env/config`；若其中含 `SHUTTLE_REPO_URL` 而本地尚无 `repo/`，会自动克隆。
 
-仓库根 [`.gitignore`](.gitignore) 已忽略 `shuttle/win/.shuttle.env/` 与 `shuttle/linux/.shuttle.env/`。
+仓库根 [`.gitignore`](.gitignore) 已忽略 `win/.shuttle.env/` 与 `linux/.shuttle.env/`。
 
 若已通过环境变量显式设置 `SHUTTLE_REPO_ROOT`，则**不会**再用 `.shuttle.env` 覆盖。
 
@@ -34,7 +34,7 @@
 在**仓库根目录**执行：
 
 ```bat
-python shuttle\win\app.py
+python win\app.py
 ```
 
 首次运行按弹窗填写远程地址；克隆目录见界面提示（`win\.shuttle.env\repo`）。
@@ -44,18 +44,18 @@ python shuttle\win\app.py
 ### 安装为命令 `shuttle`（推荐）
 
 ```bash
-bash shuttle/linux/install.sh
+bash linux/install.sh
 ```
 
-- **默认安装前缀**：非 root 为 **`$HOME/.local`**（可执行文件在 `$HOME/.local/bin/shuttle`）；root 为 **`/usr/local`**。也可用 `bash shuttle/linux/install.sh --prefix ~/.local` 或环境变量 `PREFIX=...`。
+- **默认安装前缀**：非 root 为 **`$HOME/.local`**（可执行文件在 `$HOME/.local/bin/shuttle`）；root 为 **`/usr/local`**。也可用 `bash linux/install.sh --prefix ~/.local` 或环境变量 `PREFIX=...`。
 - **PATH**：默认在「真实用户」的 **`~/.bashrc`** 中追加一行 `export PATH="<安装前缀>/bin:$PATH"`（带注释标记，新开终端生效）；若当前 `PATH` 已包含该目录则跳过。不需要改 PATH 时加 **`--no-path-snippet`**。
-- **卸载**：`bash shuttle/linux/install.sh --uninstall` 会读取 **`~/.local/share/shuttle/install.paths`**，执行 **`rm -rf <prefix>/lib/shuttle`**、**`rm -f <prefix>/bin/shuttle`**，删除记录文件，并在安装时曾写入 PATH 片段时从 `~/.bashrc` 移除对应标记块。若无记录文件，可用 **`--uninstall --prefix ~/.local`**（或其它前缀）指定删除目标。
+- **卸载**：`bash linux/install.sh --uninstall` 会读取 **`~/.local/share/shuttle/install.paths`**，执行 **`rm -rf <prefix>/lib/shuttle`**、**`rm -f <prefix>/bin/shuttle`**，删除记录文件，并在安装时曾写入 PATH 片段时从 `~/.bashrc` 移除对应标记块。若无记录文件，可用 **`--uninstall --prefix ~/.local`**（或其它前缀）指定删除目标。
 - 安装到 **`/usr/*`、`/opt/*`** 且当前非 root 时，脚本会通过 **`sudo`** 复制文件；`git clone` 在 `sudo` 场景下会以 **`SUDO_USER`** 身份执行，并把 `linux/.shuttle.env` 目录属主改为该用户以便克隆。
 
 完整参数说明：
 
 ```bash
-bash shuttle/linux/install.sh --help
+bash linux/install.sh --help
 ```
 
 ```text
@@ -67,11 +67,11 @@ shuttle -h                 # 或 shuttle --help / shuttle help
 
 ### 不安装、直接用 Python 模块
 
-在仓库根执行；可在 `shuttle/linux/.shuttle.env/config` 中只写 `SHUTTLE_REPO_URL=...`（及可选键），由工具在 `linux/.shuttle.env/repo` 自动克隆。
+在仓库根执行；可在 `linux/.shuttle.env/config` 中只写 `SHUTTLE_REPO_URL=...`（及可选键），由工具在 `linux/.shuttle.env/repo` 自动克隆。
 
 ```bash
-python3 -m shuttle.linux.cli send < /tmp/note.txt
-python3 -m shuttle.linux.cli receive
+python3 -m linux.cli send < /tmp/note.txt
+python3 -m linux.cli receive
 ```
 
 ## 冲突与限制
