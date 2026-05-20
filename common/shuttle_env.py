@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import os
 import subprocess
+import sys
 from pathlib import Path
 
 _CONFIG_NAME = "config"
@@ -159,4 +160,7 @@ def linux_env_dir() -> Path:
 
 
 def win_env_dir() -> Path:
+    """开发：仓库 win/.shuttle.env；PyInstaller 打包后：exe 同目录 .shuttle.env。"""
+    if getattr(sys, "frozen", False):
+        return Path(sys.executable).resolve().parent / ".shuttle.env"
     return Path(__file__).resolve().parents[1] / "win" / ".shuttle.env"

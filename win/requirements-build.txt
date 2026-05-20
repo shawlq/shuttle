@@ -1,0 +1,2 @@
+# Windows 打包专用（python win/build.ps1 会自动安装）
+pyinstaller>=6.0

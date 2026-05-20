@@ -1,5 +1,9 @@
 .shuttle.env/
 win/.shuttle.env/
+win/build/
+win/dist/
+win/.build-venv/
+win/_test_*/
 linux/.shuttle.env/
 __pycache__/
 *.py[cod]
