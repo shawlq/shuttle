@@ -7,6 +7,7 @@ from pathlib import Path
 
 from common.git_client import GitShuttle, GitShuttleError
 from common.shuttle_env import ShuttleEnvError, linux_env_dir, try_apply_env_dir
+from common.version import version_line
 
 
 def _print_help() -> None:
@@ -17,6 +18,7 @@ def _print_help() -> None:
   shuttle <文件路径>         发送：若唯一参数为已存在的文件路径，则发送该文件内容
   shuttle -h | --help        显示本帮助
   shuttle help               显示本帮助
+  shuttle -v | --version     显示版本号
 
 环境变量来自 linux/.shuttle.env/config（由 install.sh 生成），或由当前 shell export。
 未配置时请先运行 linux/install.sh。
@@ -68,6 +70,9 @@ def _send_path(path: Path) -> int:
 
 def main() -> int:
     argv = sys.argv[1:]
+    if argv and argv[0] in ("-v", "--version"):
+        sys.stdout.write(version_line() + "\n")
+        return 0
     if argv and argv[0] in ("-h", "--help"):
         _print_help()
         return 0

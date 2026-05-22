@@ -1,4 +1,5 @@
 from .git_client import GitShuttle, GitShuttleError
+from .version import __version__, version_line, version_string
 from .shuttle_env import (
     ShuttleEnvError,
     clone_target,
@@ -11,8 +12,11 @@ from .shuttle_env import (
 )
 
 __all__ = [
+    "__version__",
     "GitShuttle",
     "GitShuttleError",
+    "version_line",
+    "version_string",
     "ShuttleEnvError",
     "clone_target",
     "ensure_repo_cloned",

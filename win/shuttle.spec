@@ -37,6 +37,8 @@ a = Analysis(
         "common",
         "common.git_client",
         "common.shuttle_env",
+        "common.subprocess_util",
+        "common.version",
     ],
     hookspath=[],
     hooksconfig={},

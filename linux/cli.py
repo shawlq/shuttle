@@ -13,6 +13,7 @@ if str(_REPO_ROOT) not in sys.path:
 
 from common.git_client import GitShuttle, GitShuttleError
 from common.shuttle_env import ShuttleEnvError, linux_env_dir, try_apply_env_dir
+from common.version import version_line
 
 
 def _read_send_body(args: argparse.Namespace) -> str:
@@ -35,6 +36,13 @@ def main() -> int:
         return 1
 
     parser = argparse.ArgumentParser(description="通过 Git 仓库收发文本（需配置 SHUTTLE_REPO_ROOT）")
+    parser.add_argument(
+        "-v",
+        "--version",
+        action="version",
+        version=version_line(),
+        help="显示版本号并退出",
+    )
     sub = parser.add_subparsers(dest="cmd", required=True)
 
     p_send = sub.add_parser("send", help="pull 后写入载荷并 commit/push")

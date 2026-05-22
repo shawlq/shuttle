@@ -7,6 +7,8 @@ import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
 
+from common.subprocess_util import run_subprocess
+
 
 class GitShuttleError(RuntimeError):
     """Git 命令失败时抛出，附带 stderr。"""
@@ -66,7 +68,7 @@ class GitShuttle:
     ) -> subprocess.CompletedProcess[str]:
         cmd = ["git", *args]
         try:
-            proc = subprocess.run(
+            proc = run_subprocess(
                 cmd,
                 cwd=str(self.repo_root),
                 capture_output=True,

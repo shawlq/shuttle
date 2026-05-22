@@ -18,6 +18,7 @@ from tkinter import messagebox, scrolledtext
 
 from common.git_client import GitShuttle, GitShuttleError
 from common.shuttle_env import ShuttleEnvError, save_env_dir, try_apply_env_dir, win_env_dir
+from common.version import version_string
 
 _GEOM_FILE = "window_geometry.txt"
 
@@ -205,7 +206,7 @@ def main() -> None:
         return
 
     root = tk.Tk()
-    root.title("Git 文本穿梭 (shuttle)")
+    root.title(f"Git 文本穿梭 (shuttle) {version_string()}")
     _apply_smaller_fonts(root)
     saved = _load_saved_geometry(env_dir)
     root.geometry(saved if saved else "720x520")
@@ -220,6 +221,7 @@ def main() -> None:
     recv_btn = tk.Button(btn_row, text="接收", width=10)
     send_btn.pack(side=tk.LEFT, padx=(0, 8))
     recv_btn.pack(side=tk.LEFT)
+    tk.Label(btn_row, text=version_string(), fg="gray").pack(side=tk.RIGHT)
 
     status = tk.StringVar(value=f"仓库: {shuttle.repo_root}")
     tk.Label(frm, textvariable=status, fg="gray").pack(anchor=tk.W, pady=(0, 6))

@@ -7,6 +7,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+from common.subprocess_util import run_subprocess
+
 _CONFIG_NAME = "config"
 REPO_DIR_NAME = "repo"
 
@@ -65,7 +67,7 @@ def ensure_repo_cloned(
     env_dir.mkdir(parents=True, exist_ok=True)
 
     if (repo / ".git").exists():
-        r = subprocess.run(
+        r = run_subprocess(
             ["git", "-C", str(repo), "remote", "set-url", "origin", url],
             capture_output=True,
             text=True,
@@ -86,7 +88,7 @@ def ensure_repo_cloned(
         cmd.extend(["-b", clone_branch])
     cmd.extend([url, str(repo)])
     try:
-        r = subprocess.run(
+        r = run_subprocess(
             cmd,
             capture_output=True,
             text=True,

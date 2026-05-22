@@ -63,6 +63,7 @@ shuttle                    # 接收
 shuttle 要发送的正文        # 发送
 shuttle /path/to/file.txt  # 发送文件内容（唯一参数且为已存在文件）
 shuttle -h                 # 或 shuttle --help / shuttle help
+shuttle -v                 # 或 shuttle --version
 ```
 
 ### 不安装、直接用 Python 模块
@@ -70,6 +71,7 @@ shuttle -h                 # 或 shuttle --help / shuttle help
 在仓库根执行；可在 `linux/.shuttle.env/config` 中只写 `SHUTTLE_REPO_URL=...`（及可选键），由工具在 `linux/.shuttle.env/repo` 自动克隆。
 
 ```bash
+python3 -m linux.cli --version
 python3 -m linux.cli send < /tmp/note.txt
 python3 -m linux.cli receive
 ```
